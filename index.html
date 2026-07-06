@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mintoo Sharma | Senior Android Engineer</title>
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Core Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-darkest: #030712;
+            --bg-surface: #0b1329;
+            --bg-card: #111c44;
+            --accent-cyan: #06b6d4;
+            --accent-emerald: #10b981;
+            --accent-purple: #6366f1;
+            --text-primary: #f3f4f6;
+            --text-muted: #9ca3af;
+            --aosp-curve: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-darkest);
+            color: var(--text-primary);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Ambient Animated Canvas Background Engine */
+        #ambient-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* Custom Modern Scroll Track */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-darkest);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-cyan);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Floating Capsule Navigation Bar */
+        nav {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(11, 19, 41, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 10px 32px;
+            border-radius: 40px;
+            width: 90%;
+            max-width: 700px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Fira Code', monospace;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--text-primary);
+            text-shadow: 0 0 10px rgba(255,255,255,0.6);
+        }
+
+        /* Cinematic Hero Section Layout */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 140px 0 60px 0;
+        }
+
+        .hero-badge {
+            background: linear-gradient(90deg, rgba(6,182,212,0.1) 0%, rgba(99,102,241,0.1) 100%);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            padding: 8px 18px;
+            border-radius: 30px;
+            color: var(--accent-cyan);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -3px;
+            background: linear-gradient(135deg, var(--text-primary) 30%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+        }
+
+        .hero h2 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: var(--accent-cyan);
+            font-weight: 600;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+        }
+
+        .hero-summary {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            color: var(--text-muted);
+            max-width: 750px;
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        /* Action Buttons Matrix */
+        .btn-matrix {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-premium {
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-purple) 100%);
+            color: var(--bg-darkest);
+            padding: 16px 36px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3);
+            transition: all 0.4s var(--aosp-curve);
+        }
+
+        .btn-premium:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(6, 182, 212, 0.5);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-primary);
+            padding: 16px 36px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.03);
+            border-color: var(--accent-cyan);
+            transform: translateY(-2px);
+        }
+
+        /* Key Performance Metric Trackers */
+        .metrics-shelf {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-top: 80px;
+        }
+
+        .metric-capsule {
+            background: rgba(17, 28, 68, 0.3);
+            border: 1px solid rgba(255,255,255,0.03);
+            border-radius: 16px;
+            padding: 32px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-capsule::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 0% 0%, rgba(6,182,212,0.1) 0%, transparent 50%);
+        }
+
+        .metric-val {
+            font-size: 3rem;
+            font-weight: 800;
+            font-family: 'Fira Code', monospace;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-emerald));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* Section Universal Typography */
+        section {
+            padding: 120px 0;
+        }
+
+        .section-tagline {
+            font-family: 'Fira Code', monospace;
+            color: var(--accent-cyan);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            display: block;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            margin-bottom: 50px;
+        }
+
+        /* Hard Skills Grid System */
+        .skills-matrix {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .skill-node {
+            background: rgba(11, 19, 41, 0.4);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 16px;
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .skill-node:hover {
+            border-color: rgba(6, 182, 212, 0.3);
+            background: rgba(17, 28, 68, 0.4);
+            transform: translateY(-4px);
+        }
+
+        .skill-node h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .skill-node h3 i {
+            color: var(--accent-cyan);
+        }
+
+        .tag-pool {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag-node {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* Chronicle / Experience Layout */
+        .chronicle {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .chronicle::before {
+            content: '';
+            position: absolute;
+            left: 20px; top: 0; bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent-cyan) 0%, rgba(99,102,241,0.1) 100%);
+        }
+
+        .chronicle-node {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 60px;
+        }
+
+        .chronicle-node:last-child {
+            margin-bottom: 0;
+        }
+
+        .chronicle-marker {
+            position: absolute;
+            left: 11px; top: 6px;
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            background: var(--bg-darkest);
+            border: 4px solid var(--accent-cyan);
+            z-index: 2;
+            box-shadow: 0 0 15px var(--accent-cyan);
+        }
+
+        .chronicle-meta {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: var(--accent-purple);
+            margin-bottom: 6px;
+        }
+
+        .chronicle-header-block {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .chronicle-role {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .chronicle-role span {
+            color: var(--text-muted);
+            font-weight: 400;
+            font-size: 1.2rem;
+        }
+
+        .chronicle-bullets {
+            list-style: none;
+        }
+
+        .chronicle-bullets li {
+            position: relative;
+            padding-left: 20px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .chronicle-bullets li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent-cyan);
+        }
+
+        /* Spotlight App Blueprint Matrix */
+        .blueprint-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 28px;
+        }
+
+        .blueprint-card {
+            background: rgba(11, 19, 41, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 36px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s var(--aosp-curve), border-color 0.3s ease;
+        }
+
+        /* Mouse Tracking Spotlight CSS Injection */
+        .blueprint-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(800px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(6,182,212,0.06), transparent 40%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .blueprint-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(6, 182, 212, 0.25);
+            background: rgba(17, 28, 68, 0.4);
+        }
+
+        .bp-top {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 32px;
+        }
+
+        .bp-meta-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--accent-cyan);
+            font-size: 1.6rem;
+            margin-bottom: 24px;
+        }
+
+        .bp-links a {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            margin-left: 14px;
+            transition: color 0.2s ease;
+        }
+
+        .bp-links a:hover {
+            color: var(--accent-cyan);
+        }
+
+        .blueprint-card h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .blueprint-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .bp-tags {
+            position: relative;
+            z-index: 2;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: var(--accent-purple);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            list-style: none;
+        }
+
+        /* High Impact Interface Footer */
+        footer {
+            padding: 100px 0 60px 0;
+            background: #02040a;
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        .footer-msg {
+            color: var(--text-muted);
+            max-width: 500px;
+            margin: 0 auto 40px auto;
+            font-size: 1.05rem;
+        }
+
+        .footer-socials {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 60px;
+            list-style: none;
+        }
+
+        .footer-socials a {
+            color: var(--text-muted);
+            font-size: 1.6rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-socials a:hover {
+            color: var(--accent-cyan);
+            transform: scale(1.15);
+        }
+
+        .footer-copy {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.15);
+        }
+
+        /* Hardware Accelerated Entry States */
+        .reveal-node {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s var(--aosp-curve), transform 0.8s var(--aosp-curve);
+        }
+
+        .reveal-node.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            nav { width: 95%; padding: 10px 20px; }
+            .nav-links { display: none; }
+            .chronicle-header-block { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dynamic Particle Field Elements Canvas Overlay -->
+    <canvas id="ambient-canvas"></canvas>
+
+    <!-- Navigation Header Layer -->
+    <nav>
+        <div class="nav-content">
+            <a href="#about" class="nav-logo">sharma.dev</a>
+            <ul class="nav-links">
+                <li><a href="#about" class="active">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Frame Block -->
+    <header class="hero" id="about">
+        <div class="container">
+            <div class="hero-badge"><i class="fa-brands fa-android"></i> Senior / Lead Android Engineer</div>
+            <h1>Mintoo Sharma</h1>
+            <h2>Engineering High-Scale Mobile Architectures[cite: 1]</h2>
+            <p class="hero-summary">
+                Senior Android Engineer with over 7 years of deep production expertise designing and optimizing modular Android applications across fintech, location tracking, real-time chat, and enterprise domains[cite: 1].
+            </p>
+            <div class="btn-matrix">
+                <a href="mailto:mintusharma74@gmail.com" class="btn btn-premium"><i class="fa-solid fa-bolt"></i> Secure Talent / Email</a>
+                <a href="https://github.com/mintusharma" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> Inspect GitHub</a>
+            </div>
+
+            <!-- Quantitative Engineering Highlights Shelf -->
+            <div class="metrics-shelf">
+                <div class="metric-capsule">
+                    <div class="metric-val" data-target="40">0%</div>
+                    <div class="metric-label">Maintainability Optimization via Clean Architecture[cite: 1]</div>
+                </div>
+                <div class="metric-capsule">
+                    <div class="metric-val" data-target="30">0%</div>
+                    <div class="metric-label">Production Crash Rate Reduction[cite: 1]</div>
+                </div>
+                <div class="metric-capsule">
+                    <div class="metric-val" data-target="7">0+</div>
+                    <div class="metric-label">Years Cross-Domain Production Lifecycles[cite: 1]</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Technical Infrastructure Area -->
+    <section id="skills" class="container reveal-node">
+        <span class="section-tagline">// Expertise Mapping</span>
+        <h2 class="section-title">Technical Infrastructure</h2>
+        <div class="skills-matrix">
+            <div class="skill-node">
+                <h3><i class="fa-solid fa-code"></i> Languages</h3>
+                <div class="tag-pool">
+                    <span class="tag-node">Kotlin</span>
+                    <span class="tag-node">Java</span>
+                </div>
+            </div>
+            <div class="skill-node">
+                <h3><i class="fa-brands fa-android"></i> Android Jetpack</h3>
+                <div class="tag-pool">
+                    <span class="tag-node">Android SDK</span>
+                    <span class="tag-node">Jetpack Compose</span>
+                    <span class="tag-node">WorkManager</span>
+                    <span class="tag-node">Compose Navigation</span>
+                    <span class="tag-node">XML UI Layouts</span>
+                    <span class="tag-node">Material Design</span>
+                </div>
+            </div>
+            <div class="skill-node">
+                <h3><i class="fa-solid fa-layer-group"></i> Architecture & DI</h3>
+                <div class="tag-pool">
+                    <span class="tag-node">Clean Architecture</span>
+                    <span class="tag-node">App Modularization</span>
+                    <span class="tag-node">MVVM</span>
+                    <span class="tag-node">SOLID Principles</span>
+                    <span class="tag-node">Dagger / Hilt</span>
+                    <span class="tag-node">Design Patterns</span>
+                </div>
+            </div>
+            <div class="skill-node">
+                <h3><i class="fa-solid fa-arrows-spin"></i> Asynchronous & Data</h3>
+                <div class="tag-pool">
+                    <span class="tag-node">Coroutines</span>
+                    <span class="tag-node">Kotlin Flow</span>
+                    <span class="tag-node">Room DB</span>
+                    <span class="tag-node">DataStore</span>
+                    <span class="tag-node">Retrofit / OkHttp</span>
+                    <span class="tag-node">LiveData</span>
+                </div>
+            </div>
+            <div class="skill-node">
+                <h3><i class="fa-solid fa-gauge-high"></i> Quality Assurance</h3>
+                <div class="tag-pool">
+                    <span class="tag-node">Firebase Engine</span>
+                    <span class="tag-node">Crashlytics Telemetry</span>
+                    <span class="tag-node">GitHub Actions CI</span>
+                    <span class="tag-node">JUnit</span>
+                    <span class="tag-node">Mockito</span>
+                    <span class="tag-node">Espresso</span>
+                </div>
+            </div>
+            <div class="skill-node">
+                <h3><i class="fa-solid fa-people-roof"></i> Leadership</h3>
+                <div class="tag-pool">
+                    <span class="tag-node">Architecture Reviews</span>
+                    <span class="tag-node">Code Reviews</span>
+                    <span class="tag-node">Mentoring Engineers</span>
+                    <span class="tag-node">Release Ownership</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional Chronicles Area (Timeline) -->
+    <section id="experience" class="container reveal-node">
+        <span class="section-tagline">// Career Progression</span>
+        <h2 class="section-title">Engineering Footprint</h2>
+        <div class="chronicle">
+            
+            <div class="chronicle-node">
+                <div class="chronicle-marker"></div>
+                <div class="chronicle-meta">Apr 2021 — Mar 2026[cite: 1]</div>
+                <div class="chronicle-header-block">
+                    <h3 class="chronicle-role">Senior Android Engineer <span>@ 1Gen Pvt. Ltd.[cite: 1]</span></h3>
+                </div>
+                <ul class="chronicle-bullets">
+                    <li>Designed and shipped high-performance enterprise applications leveraging modular Kotlin architecture layers[cite: 1].</li>
+                    <li>Restructured boundary modules, driving a quantifiable 40% enhancement in app maintainability and decoupling metrics[cite: 1].</li>
+                    <li>Slashed application runtime crashes by 30% through advanced Firebase Crashlytics triage and strict memory allocations memory tuning[cite: 1].</li>
+                    <li>Mentored software engineering tracks via core architecture reviews, clean programming workshops, and system debug pipelines[cite: 1].</li>
+                </ul>
+            </div>
+
+            <div class="chronicle-node">
+                <div class="chronicle-marker"></div>
+                <div class="chronicle-meta">Jul 2020 — Jan 2021[cite: 1]</div>
+                <div class="chronicle-header-block">
+                    <h3 class="chronicle-role">Software Engineer <span>@ Webkul Software Pvt. Ltd.[cite: 1]</span></h3>
+                </div>
+                <ul class="chronicle-bullets">
+                    <li>Optimized transaction stability rates and checkout paths by integrating secure payment gateways (Razorpay, PayPal, Stripe)[cite: 1].</li>
+                    <li>Delivered robust business-aligned platform code layers collaborating dynamically with QA and core API product divisions[cite: 1].</li>
+                </ul>
+            </div>
+
+            <div class="chronicle-node">
+                <div class="chronicle-marker"></div>
+                <div class="chronicle-meta">Aug 2019 — Jun 2020[cite: 1]</div>
+                <div class="chronicle-header-block">
+                    <h3 class="chronicle-role">Software Engineer <span>@ eFmFm (Newt Global)[cite: 1]</span></h3>
+                </div>
+                <ul class="chronicle-bullets">
+                    <li>Resolved algorithmic data discrepancies in background cab-booking systems, routing arrays, and production maps interfaces[cite: 1].</li>
+                    <li>Deployed resilient enterprise mobility architectures aligned closely with massive scale workforce management milestones[cite: 1].</li>
+                </ul>
+            </div>
+
+            <!-- Complete Chronicle Target Re-integration -->
+            <div class="chronicle-node">
+                <div class="chronicle-marker"></div>
+                <div class="chronicle-meta">Nov 2017 — Dec 2018[cite: 1]</div>
+                <div class="chronicle-header-block">
+                    <h3 class="chronicle-role">Software Trainee <span>@ Newgen Software Tech. Ltd.[cite: 1]</span></h3>
+                </div>
+                <ul class="chronicle-bullets">
+                    <li>Supported live client environment deployment tracks, server-side system adjustments, and build pipelines for enterprise integrations[cite: 1].</li>
+                    <li>Diagnosed real-time software layer exceptions, maintaining core reliability records across massive platform codebases[cite: 1].</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Blueprints Block -->
+    <section id="projects" class="container reveal-node">
+        <span class="section-tagline">// Shipped Deployments</span>
+        <h2 class="section-title">Production App Blueprints</h2>
+        <div class="blueprint-grid">
+            
+            <div class="blueprint-card" onclick="window.open('https://play.google.com/store/search?q=earthbeat&c=apps', '_blank')">
+                <div class="bp-top">
+                    <div class="bp-meta-row">
+                        <i class="fa-solid fa-map-pin"></i>
+                        <div class="bp-links">
+                            <a href="https://play.google.com/store/search?q=earthbeat&c=apps" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                        </div>
+                    </div>
+                    <h3>EarthBeat[cite: 1]</h3>
+                    <p>Engineered highly reliable location tracking flows servicing over 5K active background nodes, optimizing execution frequencies to preserve battery under strict OS limitations[cite: 1].</p>
+                </div>
+                <ul class="bp-tags">
+                    <li>WorkManager</li>
+                    <li>Maps API</li>
+                    <li>Background Ops</li>
+                </ul>
+            </div>
+
+            <div class="blueprint-card" onclick="window.open('https://play.google.com/store/apps/details?id=com.onegen.care', '_blank')">
+                <div class="bp-top">
+                    <div class="bp-meta-row">
+                        <i class="fa-solid fa-message"></i>
+                        <div class="bp-links">
+                            <a href="https://play.google.com/store/apps/details?id=com.onegen.care" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                        </div>
+                    </div>
+                    <h3>SilverTalkies[cite: 1]</h3>
+                    <p>Developed full-duplex conversational infrastructure with advanced WebSocket lifecycle handlers, connection recovery management, and instant state restorations[cite: 1].</p>
+                </div>
+                <ul class="bp-tags">
+                    <li>Socket.io</li>
+                    <li>Coroutines</li>
+                    <li>Flow Engine</li>
+                </ul>
+            </div>
+
+            <div class="blueprint-card" onclick="window.open('https://play.google.com/store/apps/details?id=com.onegen.nano_borrower', '_blank')">
+                <div class="bp-top">
+                    <div class="bp-meta-row">
+                        <i class="fa-solid fa-credit-card"></i>
+                        <div class="bp-links">
+                            <a href="https://play.google.com/store/apps/details?id=com.onegen.nano_borrower" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                        </div>
+                    </div>
+                    <h3>Nanope MONEY[cite: 1]</h3>
+                    <p>Built secure digital lending modules utilizing fail-aware transaction interceptors and relational Local-First tracking caches powered by Room persistence layers[cite: 1].</p>
+                </div>
+                <ul class="bp-tags">
+                    <li>Room DB</li>
+                    <li>Fintech Persistence</li>
+                    <li>Hilt</li>
+                </ul>
+            </div>
+
+            <div class="blueprint-card" onclick="window.open('https://play.google.com/store/search?q=inner.explorer.home&c=apps', '_blank')">
+                <div class="bp-top">
+                    <div class="bp-meta-row">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                        <div class="bp-links">
+                            <a href="https://play.google.com/store/search?q=inner.explorer.home&c=apps" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                        </div>
+                    </div>
+                    <h3>Inner Explorer Home[cite: 1]</h3>
+                    <p>Structured an optimized analytics tracking architecture for a meditation app, syncing progress metrics cleanly via real-time cloud triggers and MVVM setups[cite: 1].</p>
+                </div>
+                <ul class="bp-tags">
+                    <li>MVVM Structure</li>
+                    <li>Firebase Sync</li>
+                    <li>Caching</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Global Interface Footer -->
+    <footer>
+        <div class="container">
+            <h2 class="footer-title">Connect Infrastructure</h2>
+            <p class="footer-msg">Open to discussing senior/lead vacancies within engineering product houses. Establishing links through the targets below.</p>
+            <ul class="footer-socials">
+                <li><a href="mailto:mintusharma74@gmail.com"><i class="fa-solid fa-envelope"></i></a></li>
+                <li><a href="http://www.linkedin.com/in/mintoo-sharma-android" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a></li>
+                <li><a href="https://github.com/mintusharma" target="_blank"><i class="fa-brands fa-github"></i></a></li>
+            </ul>
+            <div class="footer-copy">// Delhi, India. All systems running optimally. Compilation successful.</div>
+        </div>
+    </footer>
+
+    <!-- Script Layer Injections (jQuery + Core Interactive Engines) -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+
+            // --- ENGINE 1: Interactive HTML5 Canvas Particles Network ---
+            const canvas = document.getElementById('ambient-canvas');
+            const ctx = canvas.getContext('2d');
+            let particlesArray = [];
+            let mouse = { x: null, y: null, radius: 150 };
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+            window.addEventListener('mouseout', () => { mouse.x = null; mouse.y = null; });
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2 + 0.5;
+                    this.speedX = (Math.random() - 0.5) * 0.4;
+                    this.speedY = (Math.random() - 0.5) * 0.4;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+                    if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+
+                    // Cursor attraction
+                    if (mouse.x && mouse.y) {
+                        let dx = mouse.x - this.x;
+                        let dy = mouse.y - this.y;
+                        let distance = Math.sqrt(dx * dx + dy * dy);
+                        if (distance < mouse.radius) {
+                            this.x -= dx * 0.02;
+                            this.y -= dy * 0.02;
+                        }
+                    }
+                }
+                draw() {
+                    ctx.fillStyle = 'rgba(6, 182, 212, 0.3)';
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            function initParticles() {
+                particlesArray = [];
+                let count = Math.floor((canvas.width * canvas.height) / 9000);
+                for (let i = 0; i < count; i++) {
+                    particlesArray.push(new Particle());
+                }
+            }
+            initParticles();
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particlesArray.length; i++) {
+                    particlesArray[i].update();
+                    particlesArray[i].draw();
+                    
+                    for (let j = i; j < particlesArray.length; j++) {
+                        let dx = particlesArray[i].x - particlesArray[j].x;
+                        let dy = particlesArray[i].y - particlesArray[j].y;
+                        let dist = Math.sqrt(dx*dx + dy*dy);
+                        if (dist < 110) {
+                            ctx.strokeStyle = `rgba(99, 102, 241, ${0.15 - (dist/110)*0.15})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.beginPath();
+                            ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+                            ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animateParticles);
+            }
+            animateParticles();
+
+            // --- ENGINE 2: Mouse Tracking Spotlights for Blueprint Cards ---
+            $('.blueprint-card').on('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                this.style.setProperty('--mouse-x', `${x}px`);
+                this.style.setProperty('--mouse-y', `${y}px`);
+            });
+
+            // --- ENGINE 3: Incrementing Metrics Animation Loops ---
+            function runCounters() {
+                $('.metric-val').each(function() {
+                    const $this = $(this);
+                    const target = parseInt($this.attr('data-target'));
+                    $({ countNum: 0 }).animate({ countNum: target }, {
+                        duration: 1500,
+                        easing: 'swing',
+                        step: function() {
+                            $this.text(Math.floor(this.countNum) + (target === 7 ? '+' : '%'));
+                        },
+                        complete: function() {
+                            $this.text(target + (target === 7 ? '+' : '%'));
+                        }
+                    });
+                });
+            }
+
+            // --- ENGINE 4: Scroll Interceptors via Intersection Observer ---
+            const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+            const nodeObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        $(entry.target).addClass('active');
+                        if (entry.target.tagName === 'HEADER' || $(entry.target).find('.metrics-shelf').length > 0) {
+                            runCounters();
+                        }
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            $('.reveal-node, header').each(function() {
+                nodeObserver.observe(this);
+            });
+
+            // --- ENGINE 5: Navigation Rail Synchronization ---
+            $(window).on('scroll', function() {
+                const scrollPos = $(window).scrollTop() + 180;
+                $('section, header').each(function() {
+                    const top = $(this).offset().top;
+                    const bottom = top + $(this).outerHeight();
+                    const id = $(this).attr('id');
+                    
+                    if (scrollPos >= top && scrollPos <= bottom) {
+                        $('.nav-links a').removeClass('active');
+                        $(`.nav-links a[href="#${id}"]`).addClass('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
